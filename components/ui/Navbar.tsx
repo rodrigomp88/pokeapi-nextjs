@@ -12,7 +12,7 @@ export const Navbar = () => {
             width={75}
             height={100}
           />
-          <Link href="/#">
+          <Link href="/">
             <a>
               <h1 className="pt-2 text-6xl font-bold text-yellow-400">
                 P<span className="text-5xl font-thin">okémon</span>
@@ -21,7 +21,9 @@ export const Navbar = () => {
           </Link>
         </div>
         <div className="text-gray-200 font-bold">
-          <p>Favoritos</p>
+          <Link href="/favorites">
+            <a>Favoritos</a>
+          </Link>
         </div>
       </div>
     </nav>
