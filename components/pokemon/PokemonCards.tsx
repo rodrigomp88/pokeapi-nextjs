@@ -16,7 +16,7 @@ export const PokemonCards: FC<Props> = ({ pokemon }) => {
 
   return (
     <div
-      className="py-2 shadow-2xl rounded bg-gradient-to-t from-cyan-900 m-4 text-center cursor-pointer"
+      className="transform hover:translate-y-2 hover:shadow-xl transition duration-300 py-2 shadow-2xl rounded bg-gradient-to-t from-cyan-900 m-4 text-center cursor-pointer"
       key={pokemon.id}
       onClick={onCLick}
     >
