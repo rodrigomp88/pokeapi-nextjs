@@ -1,18 +1,25 @@
+import { useState } from "react";
+
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
-import { pokeApi } from "../../api";
 
+import { pokeApi } from "../../api";
 import { Layout } from "../../components/layouts";
 import { Pokemon } from "../../interfaces";
+import { localFavorites } from "../../utils";
 
 interface Props {
-  pokemon: any;
+  pokemon: Pokemon;
 }
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
+  const [isInFavorite, setIsInFavorite] = useState(
+    localFavorites.existInFavorite(pokemon.id)
+  );
+
   const onToggleFavorite = () => {
-    console.log("Bien");
-    localStorage.setItem("favorites", `${pokemon.id}`);
+    localFavorites.toggleFavorite(pokemon.id);
+    setIsInFavorite(!isInFavorite);
   };
   return (
     <Layout title={pokemon.name}>
@@ -35,12 +42,15 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
             </h1>
             <div className="text-lg font-semibold mt-5 sm:mt-0 items-center justify-center">
               <button
-                className="bg-cyan-900 w-auto p-2 text-white rounded-xl border border-cyan-200"
+                className={`${
+                  isInFavorite ? "bg-red-500" : "bg-cyan-500"
+                } w-auto p-2 text-white rounded-xl `}
                 type="button"
                 aria-label="Like"
+                // disabled={!isInFavorite}
                 onClick={onToggleFavorite}
               >
-                Añadir a favoritos
+                {isInFavorite ? "Quitar de Favoritos" : "Añadir a Favoritos"}
               </button>
             </div>
             <div className="w-full text-sm pt-2 font-bold text-slate-700 mt-2">
