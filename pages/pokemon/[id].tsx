@@ -5,10 +5,10 @@ import Image from "next/image";
 
 import confetti from "canvas-confetti";
 
-import { pokeApi } from "../../api";
 import { Layout } from "../../components/layouts";
 import { Pokemon } from "../../interfaces";
 import { localFavorites } from "../../utils";
+import { getPokemonInfo } from "../../utils/getPokemonInfo";
 
 interface Props {
   pokemon: Pokemon;
@@ -63,7 +63,6 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                 } w-auto p-2 text-white rounded-xl `}
                 type="button"
                 aria-label="Like"
-                // disabled={!isInFavorite}
                 onClick={onToggleFavorite}
               >
                 {isInFavorite ? "Quitar de Favoritos" : "Añadir a Favoritos"}
@@ -110,10 +109,10 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
-  const pokemon350 = [...Array(350)].map((value, index) => `${index + 1}`);
+  const pokemon150 = [...Array(150)].map((value, index) => `${index + 1}`);
 
   return {
-    paths: pokemon350.map((id) => ({
+    paths: pokemon150.map((id) => ({
       params: { id },
     })),
 
@@ -123,11 +122,10 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id } = params as { id: string };
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${id}`);
 
   return {
     props: {
-      pokemon: data,
+      pokemon: await getPokemonInfo(id),
     },
   };
 };

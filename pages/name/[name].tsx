@@ -10,6 +10,7 @@ import { Layout } from "../../components/layouts";
 import { Pokemon } from "../../interfaces";
 import { localFavorites } from "../../utils";
 import { PokemonListResponse } from "../../interfaces";
+import { getPokemonInfo } from "../../utils/getPokemonInfo";
 
 interface Props {
   pokemon: Pokemon;
@@ -64,7 +65,6 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
                 } w-auto p-2 text-white rounded-xl `}
                 type="button"
                 aria-label="Like"
-                // disabled={!isInFavorite}
                 onClick={onToggleFavorite}
               >
                 {isInFavorite ? "Quitar de Favoritos" : "Añadir a Favoritos"}
@@ -111,7 +111,7 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
-  const { data } = await pokeApi.get<PokemonListResponse>("/pokemon?limit=350");
+  const { data } = await pokeApi.get<PokemonListResponse>("/pokemon?limit=150");
   const pokemonNames: string[] = data.results.map((pokemon) => pokemon.name);
 
   return {
@@ -125,11 +125,10 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${name}`);
 
   return {
     props: {
-      pokemon: data,
+      pokemon: await getPokemonInfo(name),
     },
   };
 };
