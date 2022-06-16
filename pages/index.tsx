@@ -8,7 +8,7 @@ interface Props {
   pokemons: SmallPokemon[];
 }
 
-const Home: NextPage<Props> = ({ pokemons }) => {
+const HomePage: NextPage<Props> = ({ pokemons }) => {
   return (
     <Layout title="Inicio">
       <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6">
@@ -38,4 +38,4 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   };
 };
 
-export default Home;
+export default HomePage;
