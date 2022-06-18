@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { FC } from "react";
 
-export const NoFavorites = () => {
+export const NoFavorites: FC = () => {
   return (
     <>
       <div className="container mt-20 flex flex-col items-center text-center">

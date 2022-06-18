@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Head from "next/head";
 import { Navbar } from "../ui";
+import { ThemeProvider } from "next-themes";
 
 interface Props {
   children: any;
@@ -16,7 +17,7 @@ export const Layout: FC<Props> = ({ children, title }) => {
         <title>{title || "Pokemon"}</title>
         <meta name="author" content="Rodrigo" />
         <meta name="description" content={`Busqueda del pokemon ${title}`} />
-        <meta name="keywords" content={`${title}, pokemon pokedx`} />
+        <meta name="keywords" content={`${title}, pokemon pokedex`} />
 
         <meta property="og:title" content={`Informaxion sobre ${title}`} />
         <meta
@@ -25,8 +26,10 @@ export const Layout: FC<Props> = ({ children, title }) => {
         />
         <meta property="og:image" content={`${origin}/img/banner.png`} />
       </Head>
-      <Navbar />
-      <main className="px-10">{children}</main>
+      <ThemeProvider attribute="class">
+        <Navbar />
+        <main className="px-10">{children}</main>
+      </ThemeProvider>
     </>
   );
 };
